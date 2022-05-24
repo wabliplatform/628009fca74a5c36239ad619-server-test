@@ -1,0 +1,165 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: lampralexandros@gmail.com
+  description: This is a sample openApi document
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://wabli.netlify.app/
+  title: TempApi
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- description: local-host
+  url: http://localhost:8090/v1
+security:
+- {}
+tags:
+- description: not yet ready
+  name: metric
+paths:
+  /metric:
+    post:
+      operationId: createmetric
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metric'
+        description: data to be created
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metric'
+          description: successful operation
+      summary: Creates the data
+      tags:
+      - metric
+      x-eov-operation-handler: controllers/MetricController
+  /metric/{metricId}:
+    delete:
+      operationId: deletemetric
+      parameters:
+      - description: the Id parameter
+        explode: false
+        in: path
+        name: metricId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+      summary: Delete the element
+      tags:
+      - metric
+      x-eov-operation-handler: controllers/MetricController
+    get:
+      operationId: getmetric
+      parameters:
+      - description: the Id parameter
+        explode: false
+        in: path
+        name: metricId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metric'
+          description: successful operation
+      summary: Get the element
+      tags:
+      - metric
+      x-eov-operation-handler: controllers/MetricController
+    put:
+      operationId: updatemetric
+      parameters:
+      - description: the Id parameter
+        explode: false
+        in: path
+        name: metricId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/metric'
+        description: data to be updated
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/metric'
+          description: successful operation
+      summary: Updates the element
+      tags:
+      - metric
+      x-eov-operation-handler: controllers/MetricController
+  /metric/getAll:
+    get:
+      operationId: getAllmetric
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/metric'
+                type: array
+          description: successful operation
+      summary: Get all the data
+      tags:
+      - metric
+      x-method-getAll: "true"
+      x-eov-operation-handler: controllers/MetricController
+components:
+  schemas:
+    metric:
+      example:
+        protein: 5.637376656633329
+        waist: 1.4658129805029452
+        vegfruit: 5.962133916683182
+        _id: _id
+        age: 0.8008281904610115
+        BMI: 6.027456183070403
+      properties:
+        _id:
+          type: string
+        age:
+          format: double
+          type: number
+        BMI:
+          format: double
+          type: number
+        waist:
+          format: double
+          type: number
+        vegfruit:
+          format: double
+          type: number
+        protein:
+          format: double
+          type: number
+      required:
+      - BMI
+      - age
+      - protein
+      - vegfruit
+      - waist
+      type: object

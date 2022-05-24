@@ -1,0 +1,19 @@
+name: deployment-on-wabli-server
+'on':
+  repository_dispatch:
+    types:
+      - deploy
+jobs:
+  Deploy-the-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.WABLI_SERVER_SSH_HOST }}
+          username: ${{ secrets.WABLI_SERVER_SSH_USERNAME }}
+          password: ${{ secrets.WABLI_SERVER_SSH_PASSWORD }}
+          port: ${{ secrets.WABLI_SERVER_SSH_PORT }}
+          script: >-
+            ./wabli-applications/deploy.sh -b main -d local-host -r
+            https://github.com/wabliplatform/628009fca74a5c36239ad619-server-test.git
+            -f 628009fca74a5c36239ad619-server-test -p 8090
